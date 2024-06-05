@@ -4,6 +4,9 @@ REMOVE_ANSI_FLAG := $(if $(DISABLE_ANSI),--ansi never,)
 
 DOCKER_COMPOSE_COMMAND=docker compose $(REMOVE_ANSI_FLAG) -p bhasai
 
+setup-daemon:
+	@./scripts/setup-daemon.sh
+	
 reload-caddy:
 	@echo "Reloading caddy"
 	$(DOCKER_COMPOSE_COMMAND) exec -w /etc/caddy caddy caddy reload || true
