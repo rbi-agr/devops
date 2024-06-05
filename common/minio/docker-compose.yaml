@@ -1,0 +1,31 @@
+volumes:
+  minio:
+
+services:
+  minio:
+    container_name: minio
+    image: minio/minio
+    restart: always
+    volumes:
+      - minio:/data
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:?MINIO_ROOT_USER is not set}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?MINIO_ROOT_PASSWORD is not set}
+    command: server --console-address ":9001" /data
+
+  minio_helper:
+    image: minio/mc
+    container_name: minio-helper
+    profiles: ["minio"]
+    volumes:
+      - './kickstart.sh:/etc/minio/kickstart.sh'
+    entrypoint: /etc/minio/kickstart.sh
+    depends_on:
+      - minio
+    environment:
+      MINIO_HOST: http://minio:9000
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY:?MINIO_ACCESS_KEY is not set}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY:?MINIO_SECRET_KEY is not set}
+      MINIO_LOKI_BUCKET: loki

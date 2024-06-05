@@ -1,0 +1,3 @@
+{$DOMAIN_SCHEME}://environment.{$DOMAIN_NAME} {
+    reverse_proxy environment:8200
+}

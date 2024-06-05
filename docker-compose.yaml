@@ -1,0 +1,5 @@
+include:
+  - ./common/caddy/docker-compose.yaml
+  - ./common/monitoring/docker-compose.yaml
+  - ./common/minio/docker-compose.yaml
+  - ./common/environment/docker-compose.yaml

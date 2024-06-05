@@ -1,0 +1,7 @@
+{$DOMAIN_SCHEME}://cdn.{$DOMAIN_NAME} {
+    reverse_proxy minio:9001
+}
+
+{$DOMAIN_SCHEME}://cdn-api.{$DOMAIN_NAME} {
+    reverse_proxy minio:9000
+}

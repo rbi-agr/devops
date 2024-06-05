@@ -1,0 +1,7 @@
+{$DOMAIN_SCHEME}://grafana.{$DOMAIN_NAME} {
+    reverse_proxy grafana:3000
+}
+
+{$DOMAIN_SCHEME}://status.{$DOMAIN_NAME} {
+    reverse_proxy status:3001
+}
