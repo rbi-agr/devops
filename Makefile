@@ -7,6 +7,9 @@ DOCKER_COMPOSE_COMMAND=docker compose $(REMOVE_ANSI_FLAG) -p bhasai
 setup-daemon:
 	@./scripts/setup-daemon.sh
 	
+setup-webhook:
+	@./scripts/webhook/setup-webhook.sh
+	
 reload-caddy:
 	@echo "Reloading caddy"
 	$(DOCKER_COMPOSE_COMMAND) exec -w /etc/caddy caddy caddy reload || true

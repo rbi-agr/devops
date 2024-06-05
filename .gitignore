@@ -1,2 +1,4 @@
-**/.env
+**/.env*
 **/env.*
+deploy.log
+scripts/webhook/hooks.json

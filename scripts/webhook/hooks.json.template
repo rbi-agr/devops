@@ -1,0 +1,34 @@
+[
+    {
+      "id": "deploy",
+      "execute-command": "$PROJECT_ROOT/scripts/webhook/deploy.sh",
+      "command-working-directory": "$PROJECT_ROOT",
+      "include-command-output-in-response": true,
+      "include-command-output-in-response-on-error": true,
+      "pass-arguments-to-command":
+      [
+        {
+          "source": "url",
+          "name": "services"
+        } 
+      ],
+      "trigger-rule":
+      {
+        "and":
+        [
+          {
+            "match":
+            {
+              "type": "value",
+              "value": "{{ getenv "WEBHOOK_PASSWORD" | js }}",
+              "parameter":
+              {
+                "source": "payload",
+                "name": "secret_token"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
