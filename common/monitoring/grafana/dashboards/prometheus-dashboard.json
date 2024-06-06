@@ -23803,8 +23803,8 @@
       {
         "current": {
           "selected": false,
-          "text": "node-exporter:9100",
-          "value": "node-exporter:9100"
+          "text": "node_exporter:9100",
+          "value": "node_exporter:9100"
         },
         "datasource": {
           "type": "prometheus",

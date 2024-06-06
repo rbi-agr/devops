@@ -6,7 +6,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: environment
     restart: always
     environment:
       VAULT_USERNAME: ${ENVIRONMENT_USERNAME:?ENVIRONMENT_USERNAME is not set}

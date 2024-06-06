@@ -7,7 +7,6 @@ volumes:
 services:
   loki:
     image: grafana/loki:2.9.5
-    container_name: loki
     restart: always
     depends_on:
       - minio
@@ -23,7 +22,6 @@ services:
 
   promtail:
     image: grafana/promtail:2.9.5 
-    container_name: promtail
     restart: always
     volumes:
       - '/var/lib/docker/containers:/var/lib/docker/containers:ro'
@@ -32,7 +30,6 @@ services:
 
   grafana:
     image: grafana/grafana:10.3.4
-    container_name: grafana
     restart: always
     depends_on:
       - promtail
@@ -52,7 +49,6 @@ services:
 
   node_exporter:
     image: prom/node-exporter:v1.6.1
-    container_name: node-exporter
     hostname: ${org}-${env}
     restart: always
     volumes:
@@ -68,7 +64,6 @@ services:
 
   prometheus:
     image: prom/prometheus:v2.50.1
-    container_name: prometheus
     restart: always
     volumes:
       - ./prometheus/prometheus.yaml:/etc/prometheus/prometheus.yaml
@@ -86,7 +81,6 @@ services:
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.49.1 
-    container_name: cadvisor
     restart: always
     privileged: true
     volumes:
@@ -99,7 +93,6 @@ services:
       - /dev/kmsg:/dev/kmsg
 
   status:
-    container_name: status
     image: louislam/uptime-kuma:1
     restart: always
     volumes:

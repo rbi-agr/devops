@@ -3,7 +3,6 @@ volumes:
 
 services:
   minio:
-    container_name: minio
     image: minio/minio
     restart: always
     volumes:
@@ -15,7 +14,6 @@ services:
 
   minio_helper:
     image: minio/mc
-    container_name: minio-helper
     profiles: ["minio"]
     volumes:
       - './kickstart.sh:/etc/minio/kickstart.sh'
