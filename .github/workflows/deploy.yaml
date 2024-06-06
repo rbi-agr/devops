@@ -1,0 +1,45 @@
+name: Deploy Service 
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy'
+        required: true
+        default: 'dev'
+      services:
+        description: 'Services to deploy (space seperated)'
+        required: true
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    name:  Deploy ${{inputs.services}} in ${{inputs.environment}}
+
+    steps:
+    - name: Uppercase environment
+      run: |
+        echo "ENV=`echo ${{inputs.environment}}  | tr '[:lower:]' '[:upper:]'`" >>${GITHUB_ENV}
+
+    - name: call-webhook
+      run: |
+          if [ -z "${{ secrets[format('{0}_WEBHOOK_SECRET',env.ENV)] }}" ]; then
+            echo "::error::Secret '${{ format('{0}_WEBHOOK_SECRET',env.ENV) }}' is not set"
+            exit 1
+          fi
+          if [ -z "${{ secrets[format('{0}_WEBHOOK_URL',env.ENV)] }}" ]; then
+            echo "::error::Secret '${{ format('{0}_WEBHOOK_URL',env.ENV) }}' is not set"
+            exit 1
+          fi
+          if [ -z "${{ github.event.inputs.services }}" ]; then
+            echo "::error::'${{ github.event.inputs.services }}' is empty"
+            exit 1
+          fi     
+          
+          encoded_services=$(python3 -c "from urllib.parse import quote; print(quote('${{ github.event.inputs.services }}'))")
+          curl -X POST \
+            --fail-with-body -sS --no-buffer\
+            -H "Content-Type: application/json" \
+            -d '{"secret_token": "${{ secrets[format('{0}_WEBHOOK_SECRET',env.ENV)] }}"}' \
+            "${{ secrets[format('{0}_WEBHOOK_URL',env.ENV)] }}/hooks/deploy?services=$encoded_services"
+    
