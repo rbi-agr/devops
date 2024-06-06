@@ -1,0 +1,15 @@
+services:
+  demo_service:
+      image: ghcr.io/${org}/demo-service:${DEMO_SERVICE_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
+      command: bash demo-service-up.sh
+      deploy:
+        replicas: ${DEMO_SERVICE_REPLICAS:-1}
+      restart: always
+      environment:
+        DEMO_ENV_WITH_DEFAULT: ${DEMO_ENV_WITH_DEFAULT:-default_value}
+        DEMO_ENV_WITH_ERROR: ${DEMO_ENV_WITH_ERROR:?DEMO_ENV_WITH_ERROR is not set}
+      depends_on:
+        another_demo_service:
+          condition: service_healthy
+      mem_limit: ${DEMO_SERVICE_MEM_LIMIT:-${DEFAULT_MEM_LIMIT:-256m}}
+      cpus: ${DEMO_SERVICE_CPU_LIMIT:-${DEFAULT_CPU_LIMIT:-0.5}}
