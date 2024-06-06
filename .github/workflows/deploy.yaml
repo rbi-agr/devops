@@ -23,8 +23,8 @@ jobs:
 
     - name: call-webhook
       run: |
-          if [ -z "${{ secrets[format('{0}_WEBHOOK_SECRET',env.ENV)] }}" ]; then
-            echo "::error::Secret '${{ format('{0}_WEBHOOK_SECRET',env.ENV) }}' is not set"
+          if [ -z "${{ secrets[format('{0}_WEBHOOK_PASSWORD',env.ENV)] }}" ]; then
+            echo "::error::Secret '${{ format('{0}_WEBHOOK_PASSWORD',env.ENV) }}' is not set"
             exit 1
           fi
           if [ -z "${{ secrets[format('{0}_WEBHOOK_URL',env.ENV)] }}" ]; then
@@ -40,6 +40,6 @@ jobs:
           curl -X POST \
             --fail-with-body -sS --no-buffer\
             -H "Content-Type: application/json" \
-            -d '{"secret_token": "${{ secrets[format('{0}_WEBHOOK_SECRET',env.ENV)] }}"}' \
+            -d '{"secret_token": "${{ secrets[format('{0}_WEBHOOK_PASSWORD',env.ENV)] }}"}' \
             "${{ secrets[format('{0}_WEBHOOK_URL',env.ENV)] }}/hooks/deploy?services=$encoded_services"
     
