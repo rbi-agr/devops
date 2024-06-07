@@ -14,7 +14,6 @@ services:
 
   minio_helper:
     image: minio/mc
-    profiles: ["minio"]
     volumes:
       - './kickstart.sh:/etc/minio/kickstart.sh'
     entrypoint: /etc/minio/kickstart.sh
