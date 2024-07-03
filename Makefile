@@ -4,6 +4,9 @@ REMOVE_ANSI_FLAG := $(if $(DISABLE_ANSI),--ansi never,)
 
 DOCKER_COMPOSE_COMMAND=docker compose $(REMOVE_ANSI_FLAG) -p bhasai
 
+install-docker:
+	@./scripts/install-docker.sh
+
 setup-daemon:
 	@./scripts/setup-daemon.sh
 	
