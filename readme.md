@@ -20,6 +20,40 @@ This repository helps you with end to end setup of commonly required services fo
 
 In general every project requires observability, ci/cd pipelines, environment management, etc and these things don't change from project to project. This repository helps standardise setup of these so that separate effort on each project can be minimised.
 
+# How?
+
+## Assumptions
+
+1. A VM with Ubuntu 22.04 (sudo access will be required)
+2. A wildcard domain mapped to the above VM (if you want to expose service publicly) - e.g. `*.mydomain.com`
+3. Allow public inbound traffic on port 80 and Port 443 on the above VM (if you want to expose service publicly)
+4. Allow public inbound traffic on port 9000 (if you want to expose deployment webhook publicly)
+5. Run `sudo apt-get install build-essential` to install essential packages
+   
+## Setting up services on VM
+
+1. Create a fork of this repository
+2. Clone the forked repository in the VM
+3. Create a copy of [sample.env](./common/sample.env) file (`cp common/sample.env .env`)
+4. **Update the environment variables in the .env file as required**
+5. Create a copy of example docker-compose file (`cp docker-compose.yaml.example docker-compose.yaml`)
+6. Create a copy of example Caddyfile (`cp Caddyfile.example Caddyfile`)
+7. Run `make install-docker` to install docker
+8. Exit out of VM and re-connect to the VM to reflect the latest user changes
+9. Run `make setup-daemon` to configure the docker daemon
+10. Run `make setup-webhook` to start the webhook server
+11. Run `make deploy` to deploy all the services
+
+## Setting up Github Action for CD
+
+1. Go to *Actions* tab in the repo and enable actions
+2. Add `{Environment}_WEBHOOK_PASSWORD` and `{Environment}_WEBHOOK_URL` as repository secrets (the `Environment` here should be in uppercase letters and can be any name that you want to give to environment e.g., DEV)
+
+## Deploying services using Github Action
+
+1. Go the *Actions* tab and open *Deploy Service* Action from the left bar
+2. Click on *Run workflow* and provide environment (this should be same as you used while setting up Action) and the service name you want to deploy
+
 ## Developer Documentaion
 
 1. [Onboarding a service](./docs/onboarding.md) 
