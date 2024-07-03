@@ -1,3 +1,25 @@
+# What?
+
+This repository helps you with end to end setup of commonly required services for any project in a quick way (< 1 hr) and at the same time provides you with a standard way to add new services specific to your project.
+
+ Common services are as follows:
+
+1. [Loki](https://github.com/grafana/loki) - database to store logs
+2. [Prometheus](https://github.com/prometheus/prometheus) - time series database to store different metrics
+3. [Minio](https://github.com/minio/minio) - s3 compatible object storage (e.g., it is used by loki to store old logs)
+4. [Grafana](https://github.com/grafana/grafana) - data visualisation platform (e.g., logs can be viewed here)
+5.  [Promtail](https://grafana.com/docs/loki/latest/send-data/promtail/) - used to push local logs to loki
+6. [Cadvisor](https://github.com/google/cadvisor) - exposes container metrics
+7. [Node Exporter](https://github.com/prometheus/node_exporter) - exposes node metrics
+8. [Vault](https://github.com/hashicorp/vault) - used for secrets management
+9. [Webhook Server](https://github.com/adnanh/webhook) - used to enable cd through an API
+10. [Caddy](https://github.com/caddyserver/caddy) - used to expose services to end users
+11. [Uptime](https://github.com/louislam/uptime-kuma) - used to monitor services
+
+# Why?
+
+In general every project requires observability, ci/cd pipelines, environment management, etc and these things don't change from project to project. This repository helps standardise setup of these so that separate effort on each project can be minimised.
+
 ## Developer Documentaion
 
 1. [Onboarding a service](./docs/onboarding.md) 
