@@ -91,3 +91,4 @@ In general every project requires observability, ci/cd pipelines, environment ma
 > 3. `DISABLE_REMOVE_ORPHANS` (orphan containers are removed by default when your run `make deploy` without <service_name>, set this to 1 to disable this behaviour)
 > 4. `DISABLE_PULL` (images are pulled/rebuilt by default (if you provide `<service_name>`, image for only that service is pulled/rebuilt) when you run `make deploy [services=<service_name>]`,  set this to 1 to disable this behaviour)
 > 5. `<service_name>` accepts either one or multiple values separated by space
+> 6. `ENABLE_GIT_PULL` (set this to 1 to automatically pull the latest code from the checked out branch before deploying services)

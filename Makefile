@@ -17,7 +17,7 @@ reload-caddy:
 	@echo "Reloading caddy"
 	$(DOCKER_COMPOSE_COMMAND) exec -w /etc/caddy caddy caddy reload || true
 
-deploy: $(if $(DISABLE_PULL),,pull build) reload-caddy
+deploy: $(if $(ENABLE_GIT_PULL),git-pull,) $(if $(DISABLE_PULL),,pull build) reload-caddy
 	$(DOCKER_COMPOSE_COMMAND)  up -d $(FORCE_RECREATE_FLAG) $(REMOVE_ORPHANS_FLAG) ${services}
 	
 restart:
