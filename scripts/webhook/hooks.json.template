@@ -10,7 +10,23 @@
         {
           "source": "url",
           "name": "services"
-        } 
+        },
+        {
+          "source": "payload",
+          "name": "ENABLE_FORCE_RECREATE"
+        },
+        {
+          "source": "payload",
+          "name": "DISABLE_REMOVE_ORPHANS"
+        },
+        {
+          "source": "payload",
+          "name": "DISABLE_ANSI"
+        },
+        {
+          "source": "payload",
+          "name": "ENABLE_GIT_PULL"
+        }
       ],
       "trigger-rule":
       {

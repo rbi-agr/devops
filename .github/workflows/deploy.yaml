@@ -20,6 +20,14 @@ jobs:
     - name: Uppercase environment
       run: |
         echo "ENV=`echo ${{inputs.environment}}  | tr '[:lower:]' '[:upper:]'`" >>${GITHUB_ENV}
+    
+    - name: Set Default Values to Repository Variable
+      run: |
+        echo "ENABLE_FORCE_RECREATE=${{ vars.ENABLE_FORCE_RECREATE || 1 }}" >> ${GITHUB_ENV}
+        echo "DISABLE_REMOVE_ORPHANS=${{ vars.DISABLE_REMOVE_ORPHANS || 0 }}" >> ${GITHUB_ENV}
+        echo "DISABLE_ANSI=${{ vars.DISABLE_ANSI || 1 }}" >> ${GITHUB_ENV}
+        echo "ENABLE_GIT_PULL=${{ vars.ENABLE_GIT_PULL || 1 }}" >> ${GITHUB_ENV}
+  
 
     - name: call-webhook
       run: |
@@ -40,6 +48,6 @@ jobs:
           curl -X POST \
             --fail-with-body -sS --no-buffer\
             -H "Content-Type: application/json" \
-            -d '{"secret_token": "${{ secrets[format('{0}_WEBHOOK_PASSWORD',env.ENV)] }}"}' \
+            -d '{"secret_token": "${{ secrets[format('{0}_WEBHOOK_PASSWORD',env.ENV)] }}", "ENABLE_FORCE_RECREATE":${{ env.ENABLE_FORCE_RECREATE }}, "DISABLE_REMOVE_ORPHANS":${{ env.DISABLE_REMOVE_ORPHANS }}, "DISABLE_ANSI":${{ env.DISABLE_ANSI }} ,"ENABLE_GIT_PULL":${{ env.ENABLE_GIT_PULL }}}' \
             "${{ secrets[format('{0}_WEBHOOK_URL',env.ENV)] }}/hooks/deploy?services=$encoded_services"
     

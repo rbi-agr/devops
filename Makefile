@@ -1,6 +1,6 @@
-FORCE_RECREATE_FLAG := $(if $(ENABLE_FORCE_RECREATE),--force-recreate,)
-REMOVE_ORPHANS_FLAG := $(if $(or $(services),$(DISABLE_REMOVE_ORPHANS)),,--remove-orphans)
-REMOVE_ANSI_FLAG := $(if $(DISABLE_ANSI),--ansi never,)
+FORCE_RECREATE_FLAG := $(if $(filter 1,$(ENABLE_FORCE_RECREATE)),--force-recreate,)
+REMOVE_ORPHANS_FLAG := $(if $(or $(services),$(filter 1, $(DISABLE_REMOVE_ORPHANS))),,--remove-orphans)
+REMOVE_ANSI_FLAG := $(if $(filter 1,$(DISABLE_ANSI)),,--ansi never)
 
 DOCKER_COMPOSE_COMMAND=docker compose $(REMOVE_ANSI_FLAG) -p bhasai
 
@@ -17,7 +17,7 @@ reload-caddy:
 	@echo "Reloading caddy"
 	$(DOCKER_COMPOSE_COMMAND) exec -w /etc/caddy caddy caddy reload || true
 
-deploy: $(if $(ENABLE_GIT_PULL),git-pull,) $(if $(DISABLE_PULL),,pull build) reload-caddy
+deploy: $(if $(filter 1,$(ENABLE_GIT_PULL)),git-pull,) $(if $(filter 1,$(DISABLE_PULL)),,pull build) reload-caddy
 	$(DOCKER_COMPOSE_COMMAND)  up -d $(FORCE_RECREATE_FLAG) $(REMOVE_ORPHANS_FLAG) ${services}
 	
 restart:
