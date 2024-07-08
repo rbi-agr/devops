@@ -7,6 +7,9 @@ DOCKER_COMPOSE_COMMAND=docker compose $(REMOVE_ANSI_FLAG) -p bhasai
 install-docker:
 	@./scripts/install-docker.sh
 
+install-gpu-drivers:
+	@./scripts/install-gpu-drivers.sh
+
 setup-daemon:
 	@./scripts/setup-daemon.sh
 	
