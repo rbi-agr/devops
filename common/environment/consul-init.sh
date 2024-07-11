@@ -19,7 +19,10 @@ if ! vault kv get kv/env >/dev/null 2>&1; then
 # create a backup of the original .env
 cp .env .env.bak
 else 
-mv env.tmp .env.back
+  # Backup the last file created by Consul 
+  if [ -f env.tmp ]; then
+      mv env.tmp .env.back
+  fi
 fi
 
 
