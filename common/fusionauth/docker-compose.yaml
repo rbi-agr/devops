@@ -17,8 +17,9 @@ services:
       retries: 5
     volumes:
       - fusionauth_db:/var/lib/postgresql/data
-  
-  fusionauth_es:
+
+  # fusionauth-app fails to connect to elastic search if we use service name as fusionauth_es
+  fusionauth-es:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
     mem_limit: '2gb'
     environment:
@@ -59,7 +60,7 @@ services:
     depends_on:
       fusionauth_db:
         condition: service_healthy
-      fusionauth_es:
+      fusionauth-es:
         condition: service_healthy
     environment:
       DATABASE_ROOT_USERNAME: ${FUSIONAUTH_POSTGRES_ROOT_USERNAME:?FUSIONAUTH_POSTGRES_ROOT_USERNAME is not set}
@@ -70,7 +71,8 @@ services:
       FUSIONAUTH_APP_MEMORY: "2048M"
       FUSIONAUTH_APP_RUNTIME_MODE: ${FUSIONAUTH_APP_RUNTIME_MODE:-development}
       FUSIONAUTH_APP_URL: http://fusionauth:9011
-      SEARCH_SERVERS: http://fusionauth_es:9200
+      # fusionauth-app fails to connect to elastic search if we use SEARCH_SERVERS as http://fusionauth_es:9200
+      SEARCH_SERVERS: http://fusionauth-es:9200
       SEARCH_TYPE: elasticsearch
       FUSIONAUTH_APP_KICKSTART_FILE: /usr/local/fusionauth/kickstart/kickstart.json
       FUSIONAUTH_API_KEY: ${FUSIONAUTH_API_KEY:?fusionauth api key is not set}
