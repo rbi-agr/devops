@@ -1,7 +1,7 @@
 include:
   - ./common/monitoring/docker-compose.yaml
   - ./common/minio/docker-compose.yaml
-#  - ./common/environment/docker-compose.yaml
+  - ./common/environment/docker-compose.yaml
 
 #services:
 #  caddy:
@@ -11,6 +11,6 @@ include:
 #    volumes:
 #      - project-specific-volume-mappings:/etc/caddy/project-name
 
-volumes:
+#volumes:
 #  caddy_data:
 #  caddy_config:
