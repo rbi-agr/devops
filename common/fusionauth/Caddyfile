@@ -1,0 +1,5 @@
+{$DOMAIN_SCHEME}://fusionauth.{$DOMAIN_NAME} {
+    reverse_proxy fusionauth:9011 {
+      header_up X-Forwarded-Port 443
+    }
+}
