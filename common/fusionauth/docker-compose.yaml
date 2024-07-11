@@ -1,0 +1,78 @@
+volumes:
+  fusionauth_db:
+  fusionauth_es:
+
+services:
+  fusionauth_db:
+    image: postgres:12.9
+    restart: always
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_USER: ${FUSIONAUTH_POSTGRES_ROOT_USERNAME:?FUSIONAUTH_POSTGRES_ROOT_USERNAME is not set}
+      POSTGRES_PASSWORD: ${FUSIONAUTH_POSTGRES_ROOT_PASSWORD:?FUSIONAUTH_POSTGRES_ROOT_PASSWORD is not set}
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - fusionauth_db:/var/lib/postgresql/data
+  
+  fusionauth_es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
+    mem_limit: '2gb'
+    environment:
+      cluster.name: fusionauth
+      bootstrap.memory_lock: "true"
+      discovery.type: single-node
+      ES_JAVA_OPTS: ${ES_JAVA_OPTS}
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "curl",
+          "--fail",
+          "--write-out",
+          "'HTTP %{http_code}'",
+          "--silent",
+          "--output",
+          "/dev/null",
+          "http://localhost:9200/"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+      start_period: 2m
+    restart: always
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - fusionauth_es:/usr/share/elasticsearch/data
+
+  fusionauth:
+    image: fusionauth/fusionauth-app:1.49.2
+    restart: always
+    volumes:
+      - ./kickstart:/usr/local/fusionauth/kickstart
+    depends_on:
+      fusionauth_db:
+        condition: service_healthy
+      fusionauth_es:
+        condition: service_healthy
+    environment:
+      DATABASE_ROOT_USERNAME: ${FUSIONAUTH_POSTGRES_ROOT_USERNAME:?FUSIONAUTH_POSTGRES_ROOT_USERNAME is not set}
+      DATABASE_ROOT_PASSWORD: ${FUSIONAUTH_POSTGRES_ROOT_PASSWORD:?FUSIONAUTH_POSTGRES_ROOT_PASSWORD is not set}
+      DATABASE_USERNAME: ${FUSIONAUTH_POSTGRES_USERNAME:?FUSIONAUTH_POSTGRES_USERNAME is not set}
+      DATABASE_PASSWORD: ${FUSIONAUTH_POSTGRES_PASSWORD:?FUSIONAUTH_POSTGRES_PASSWORD is not set}
+      DATABASE_URL: jdbc:postgresql://fusionauth_db:5432/fusionauth
+      FUSIONAUTH_APP_MEMORY: "2048M"
+      FUSIONAUTH_APP_RUNTIME_MODE: ${FUSIONAUTH_APP_RUNTIME_MODE:-development}
+      FUSIONAUTH_APP_URL: http://fusionauth:9011
+      SEARCH_SERVERS: http://fusionauth_es:9200
+      SEARCH_TYPE: elasticsearch
+      FUSIONAUTH_APP_KICKSTART_FILE: /usr/local/fusionauth/kickstart/kickstart.json
+      FUSIONAUTH_API_KEY: ${FUSIONAUTH_API_KEY:?fusionauth api key is not set}
+      FUSIONAUTH_ADMIN_EMAIL: ${FUSIONAUTH_ADMIN_EMAIL:?fusionauth admin email is not set }
+      FUSIONAUTH_ADMIN_PASSWORD: ${FUSIONAUTH_ADMIN_PASSWORD:?fusionauth admin password is not set}
