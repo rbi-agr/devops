@@ -38,14 +38,14 @@ Example:  [/examples/workflows/docker-test.yaml](../examples/workflows/docker-te
 ## Adding your service
 
 ### 1. Add service to compose
-Example: [demo_service](../examples/docker-compose.yml)
+Example: [demo_service](../examples/docker-compose.yaml)
 
 Raise a PR with the following changes
 - [docker-compose.yaml](../docker-compose.yaml) updated with your required services
   - Ensure each `service` has a name in `snake_case`
   - Ensure to add a restart policy to your services so that it restarts on exit
   - Refrain exposing any ports in compose file (see caddy section below)
-  - Add environment variables to [sample.env](../sample.env) and format the mandatory variables as `${VAR:?error}` in the compose file.
+  - Add environment variables to [sample.env](../sample.env) and format the mandatory variables as `${VAR:?error}` in the compose file. 
   - You must configure an image tag, memory, cpu limit and replicas for your service. Refer to above example for the standard format.
    
 
