@@ -9,7 +9,7 @@ Examples:
  - [Node Dockerfile](../examples/dockerfiles/node.Dockerfile)
 
 Ensure the following:
- - Docker image includes a [HEALTHCHECK](https://docs.docker.com/reference/dockerfile/#healthcheck) for the [docker-test.yaml](./examples/workflows/docker-test.yaml) workflow. Ensure that [health check parameters](https://docs.docker.com/reference/dockerfile/#healthcheck) are adequate for your services.
+ - Docker image includes a [HEALTHCHECK](https://docs.docker.com/reference/dockerfile/#healthcheck) for the [docker-test.yaml](../examples/workflows/docker-test.yaml) workflow. Ensure that [health check parameters](https://docs.docker.com/reference/dockerfile/#healthcheck) are adequate for your services.
 - You can set `DISABLE_HEALTHCHECK=true` in actions environment in your repository to disable Healthcheck test in the workflow
 
 References:
