@@ -1,0 +1,4 @@
+# The registry doesn't have a auth thus exposing it publicly means anyone can access the images pushed to this registry
+{$DOMAIN_SCHEME}://registry.{$DOMAIN_NAME} {
+    reverse_proxy registry:5000
+}

@@ -1,0 +1,10 @@
+services:
+  registry:
+    image: registry:2.8.3
+    environment:
+      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
+    volumes:
+      - registry:/data
+
+volumes:
+  registry:
