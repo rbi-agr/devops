@@ -27,11 +27,13 @@ if [ -z "$WEBHOOK_PASSWORD" ]; then
     echo "ERROR: WEBHOOK_PASSWORD is not defined in .env"
     exit 1
 fi
+source <(grep "^WEBHOOK_USER=" .env)
+source <(grep "^WEBHOOK_GROUP=" .env)
 
 sed -i "s|\${SCRIPT_DIR}|$SCRIPT_DIR|g" "$SERVICE_FILE"
 sed -i "s|\${PROJECT_ROOT}|$PROJECT_ROOT|g" "$SERVICE_FILE"
-sed -i "s|\${WEBHOOK_USER}|$(whoami)|g" "$SERVICE_FILE"
-sed -i "s|\${WEBHOOK_GROUP}|$(id -gn)|g" "$SERVICE_FILE"
+sed -i "s|\${WEBHOOK_USER}|${WEBHOOK_USER:-ubuntu}|g" "$SERVICE_FILE"
+sed -i "s|\${WEBHOOK_GROUP}|${WEBHOOK_GROUP:-ubuntu}|g" "$SERVICE_FILE"
 sed -i "/\[Service\]/a Environment=\"WEBHOOK_PASSWORD=$WEBHOOK_PASSWORD\"" "$SERVICE_FILE"
 
 
