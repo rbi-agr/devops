@@ -41,7 +41,7 @@ In general every project requires observability, ci/cd pipelines, environment ma
 7. Run `make install-docker` to install docker
 8. Exit out of VM and re-connect to the VM to reflect the latest user changes
 9. Run `make setup-daemon` to configure the docker daemon
-10. Run `make setup-webhook` to start the webhook server
+10. Run `sudo make setup-webhook` to start the webhook server
 11. Run `make deploy` to deploy all the services
 
 ## Setting up Github Action for CD
@@ -53,6 +53,10 @@ In general every project requires observability, ci/cd pipelines, environment ma
 
 1. Go the *Actions* tab and open *Deploy Service* Action from the left bar
 2. Click on *Run workflow* and provide environment (this should be same as you used while setting up Action) and the service name you want to deploy
+
+## Viewing Webhook Service (used for CD) Logs
+- Run `sudo journalctl -u webhook.service` to view logs
+
 
 ## Developer Documentaion
 
