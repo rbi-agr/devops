@@ -1,4 +1,4 @@
-include:
+#include:
 #  - ./common/monitoring/docker-compose.yaml
 #  - ./common/minio/docker-compose.yaml
 #  - ./common/environment/docker-compose.yaml
