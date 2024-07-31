@@ -4,3 +4,4 @@ import ./common/environment/Caddyfile
 #import ./common/fusionauth/Caddyfile
 # The registry doesn't have a auth thus exposing it publicly means anyone can access the images pushed to this registry
 #import ./common/registry/Caddyfile
+#import ./common/uptime/Caddyfile
