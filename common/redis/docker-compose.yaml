@@ -1,0 +1,12 @@
+services:
+  redis:
+    image: redis:latest
+    restart: always
+    command: [ 'redis-server', '--appendonly', 'yes' ]
+    volumes:
+      - redis:/data
+      - redis_conf:/usr/local/etc/redis/redis.conf
+
+volumes:
+  redis:
+  redis_conf:
