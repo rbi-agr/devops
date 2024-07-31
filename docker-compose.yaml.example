@@ -3,6 +3,7 @@ include:
 #  - ./common/minio/docker-compose.yaml
 #  - ./common/environment/docker-compose.yaml
 #  - ./common/fusionauth/docker-compose.yaml
+#  - ./common/clickhouse/docker-compose.yaml
 #  - ./common/redis/docker-compose.yaml
 #  - ./common/db/docker-compose.yaml
 #  - ./common/registry/docker-compose.yaml

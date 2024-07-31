@@ -1,0 +1,23 @@
+services:
+  clickhouse:
+    image: 'clickhouse/clickhouse-server:24.1.6'
+    user: '101:101'
+    hostname: clickhouse
+    restart: always
+    volumes:
+      - ./config.xml:/etc/clickhouse-server/config.d/config.xml
+      - ./users.xml:/etc/clickhouse-server/users.d/users.xml
+      - clickhouse:/var/lib/clickhouse
+    depends_on:
+      - clickhouse_keeper
+      
+  clickhouse_keeper:
+    image: 'clickhouse/clickhouse-keeper:24.1.6'
+    user: '101:101'
+    hostname: clickhouse-keeper
+    restart: always
+    volumes:
+      - ./keeper_config.xml:/etc/clickhouse-keeper/keeper_config.xml
+
+volumes:
+  clickhouse:
