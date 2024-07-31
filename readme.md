@@ -29,6 +29,8 @@ In general every project requires observability, ci/cd pipelines, environment ma
 3. Allow public inbound traffic on port 80 and Port 443 on the above VM (if you want to expose service publicly)
 4. Allow public inbound traffic on port 9000 (if you want to expose deployment webhook publicly)
 5. Run `sudo apt-get install build-essential` to install essential packages
+6. Run `sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq &&\
+    sudo chmod +x /usr/bin/yq` to install [yq](https://github.com/mikefarah/yq)
    
 ## Setting up services on VM
 
