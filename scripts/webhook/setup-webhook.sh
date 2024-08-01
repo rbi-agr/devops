@@ -4,6 +4,9 @@ set -eo pipefail
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 PROJECT_ROOT=$(cd $SCRIPT_DIR/../../ && pwd && cd --)
+SERVICE_FILE="/etc/systemd/system/webhook.service"
+TEMPLATE_FILE="$PROJECT_ROOT/scripts/webhook/webhook.service.template"
+
 
 echo "Setup webhook"
 if ! command -v webhook &> /dev/null; then 
@@ -14,14 +17,43 @@ else
     echo "Webhook is already installed"; 
 fi
 
-echo "Starting  Webhook"
+
+echo "Creating systemd service file"
+cp "$TEMPLATE_FILE" "$SERVICE_FILE"
+echo "Systemd service file created"
+
 source <(grep "^WEBHOOK_PASSWORD=" .env)
 if [ -z "$WEBHOOK_PASSWORD" ]; then
     echo "ERROR: WEBHOOK_PASSWORD is not defined in .env"
     exit 1
 fi
-tmux kill-session -t webhook-session 2> /dev/null && echo "Existing session 'webhook-session' killed" || true
-sed "s|\$PROJECT_ROOT|${PROJECT_ROOT}|g" $PROJECT_ROOT/scripts/webhook/hooks.json.template > $PROJECT_ROOT/scripts/webhook/hooks.json
+source <(grep "^WEBHOOK_USER=" .env)
+source <(grep "^WEBHOOK_GROUP=" .env)
 
-tmux new-session -c "$PROJECT_ROOT" -d -s webhook-session "export WEBHOOK_PASSWORD=$WEBHOOK_PASSWORD ; webhook -hooks $PROJECT_ROOT/scripts/webhook/hooks.json -verbose -template 2>&1 | tee -a \"$PROJECT_ROOT/deploy.log\"; bash"
-echo "Webhook started"
+sed -i "s|\${SCRIPT_DIR}|$SCRIPT_DIR|g" "$SERVICE_FILE"
+sed -i "s|\${PROJECT_ROOT}|$PROJECT_ROOT|g" "$SERVICE_FILE"
+sed -i "s|\${WEBHOOK_USER}|${WEBHOOK_USER:-ubuntu}|g" "$SERVICE_FILE"
+sed -i "s|\${WEBHOOK_GROUP}|${WEBHOOK_GROUP:-ubuntu}|g" "$SERVICE_FILE"
+sed -i "/\[Service\]/a Environment=\"WEBHOOK_PASSWORD=$WEBHOOK_PASSWORD\"" "$SERVICE_FILE"
+
+
+# Reload systemd to recognize the new or changed service file
+echo "Reloading daemon"
+sudo systemctl daemon-reload
+
+# Restart service if already running, otherwise start it
+if sudo systemctl is-active --quiet webhook.service; then
+    echo "Restarting webhook service"
+    sudo systemctl restart webhook.service
+else
+    echo "Starting webhook service"
+    sudo systemctl enable --now webhook.service
+fi
+
+
+if sudo systemctl is-active --quiet webhook.service; then
+    echo "Webhook service started successfully"
+else
+    echo "Failed to start webhook service"
+    exit 1
+fi

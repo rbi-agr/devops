@@ -1,0 +1,17 @@
+[Unit]
+Description=Webhook Service
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/webhook -hooks ${PROJECT_ROOT}/scripts/webhook/hooks.json -verbose -template
+WorkingDirectory=${SCRIPT_DIR}
+User=${WEBHOOK_USER}
+Group=${WEBHOOK_GROUP}
+Restart=always
+TimeoutStartSec=30
+TimeoutStopSec=30
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
