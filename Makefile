@@ -1,10 +1,11 @@
 FORCE_RECREATE_FLAG := $(if $(filter 1,$(ENABLE_FORCE_RECREATE)),--force-recreate,)
 REMOVE_ORPHANS_FLAG := $(if $(or $(services),$(filter 1, $(DISABLE_REMOVE_ORPHANS))),,--remove-orphans)
 REMOVE_ANSI_FLAG := $(if $(filter 1,$(DISABLE_ANSI)),,--ansi never)
+SDC := $(if $(filter 1,$(SDC)),-f docker-compose.SDC.yaml,)
 
-DOCKER_COMPOSE_COMMAND=docker compose $(REMOVE_ANSI_FLAG) -p bhasai
+DOCKER_COMPOSE_COMMAND=docker compose ${SDC} $(REMOVE_ANSI_FLAG) -p bhasai
 
-install-docker:
+install-docker:ma
 	@./scripts/install-docker.sh
 
 install-gpu-drivers:

@@ -1,0 +1,24 @@
+#include:
+#  - ./common/monitoring/docker-compose.SDC.yaml
+#  - ./common/minio/docker-compose.yaml
+#  - ./common/environment/docker-compose.yaml
+#  - ./common/fusionauth/docker-compose.yaml
+#  - ./common/uptime/docker-compose.yaml
+#  - ./common/clickhouse/docker-compose.yaml
+#  - ./common/redis/docker-compose.yaml
+#  - ./common/db/docker-compose.yaml
+#  - ./common/registry/docker-compose.yaml
+
+
+services:
+  caddy:
+    extends:
+      file: common/caddy/docker-compose.SDC.yaml
+      service: caddy
+#    volumes:
+#      - ./certs:/certs
+
+
+volumes:
+  caddy_data:
+  caddy_config:
