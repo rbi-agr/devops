@@ -14,6 +14,7 @@ services:
     environment:
       DOMAIN_SCHEME: ${DOMAIN_SCHEME:?DOMAIN_SCHEME is not set}
       DOMAIN_NAME: ${DOMAIN_NAME:?DOMAIN_NAME is not set}
+      TLS_ENTRY: ${TLS_ENTRY}
     volumes:
       - ../:/etc/caddy/common
       - ../../Caddyfile/:/etc/caddy/Caddyfile
