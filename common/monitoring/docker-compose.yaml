@@ -91,10 +91,4 @@ services:
     - /dev/disk/:/dev/disk:ro
     devices:
       - /dev/kmsg:/dev/kmsg
-
-  status:
-    image: louislam/uptime-kuma:1
-    restart: always
-    volumes:
-      - status:/app/data
       
