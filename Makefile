@@ -5,7 +5,7 @@ SDC := $(if $(filter 1,$(SDC)),-f docker-compose.SDC.yaml,)
 
 DOCKER_COMPOSE_COMMAND=docker compose ${SDC} $(REMOVE_ANSI_FLAG) -p bhasai
 
-install-docker:ma
+install-docker:
 	@./scripts/install-docker.sh
 
 install-gpu-drivers:
