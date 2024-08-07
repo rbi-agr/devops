@@ -12,8 +12,8 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      DOMAIN_SCHEME: ${DOMAIN_SCHEME:?DOMAIN_SCHEME is not set}
-      DOMAIN_NAME: ${DOMAIN_NAME:?DOMAIN_NAME is not set}
+      DOMAIN_SCHEME: ${DOMAIN_SCHEME:-http}
+      DOMAIN_NAME: ${DOMAIN_NAME:-localdev.me}
       TLS_ENTRY: ${TLS_ENTRY}
     volumes:
       - ../:/etc/caddy/common
