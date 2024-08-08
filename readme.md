@@ -90,6 +90,12 @@ In general every project requires observability, ci/cd pipelines, environment ma
 7. Build images
     `make build [services=<service_name>]`
 
+## Useful Utilities
+
+1. Migrate Volume from localhost to localhost/remote 
+
+    `make migrate-volume` 
+
 > [!NOTE]
 >  Optional environment variable to tweak behaviour of Makefile:
 > 1. `ENABLE_FORCE_RECREATE` (set this to 1 to enable force recreations of containers every time a service is deployed)

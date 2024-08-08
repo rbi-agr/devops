@@ -13,6 +13,9 @@ install-gpu-drivers:
 
 setup-daemon:
 	@./scripts/setup-daemon.sh
+
+migrate-volume:
+	@./scripts/migrate-volume.sh
 	
 setup-webhook:
 	@./scripts/webhook/setup-webhook.sh
