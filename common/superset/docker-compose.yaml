@@ -1,0 +1,78 @@
+x-superset-environment: &superset-environment
+  environment:
+      DATABASE_DB: superset              
+      DATABASE_HOST: db           
+      DATABASE_PASSWORD: ${SUPERSET_DATABASE_PASSWORD:?SUPERSET_DATABASE_PASSWORD is not set}     
+      DATABASE_USER: superset           
+      DATABASE_PORT: 5432          
+      DATABASE_DIALECT: postgresql  
+      PYTHONPATH: "/app/pythonpath:/app/docker/pythonpath_dev"                 
+      SUPERSET_ENV: ${SUPERSET_ENV:-production}                                 
+      SECRET_KEY: ${SUPERSET_SECRET_KEY:?SUPERSET_SECRET_KEY is not set}                   
+      CYPRESS_CONFIG: false      
+      SUPERSET_PORT: 8088                            
+      SUPERSET_LOAD_EXAMPLES: no
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is not set`}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is not set`}
+      SUPERSET_ADMIN_PASSWORD: ${SUPERSET_ADMIN_PASSWORD:?SUPERSET_ADMIN_PASSWORD is not set`}
+      SUPERSET_TALISMAN_ENABLED: ${SUPERSET_TALISMAN_ENABLED:-false}
+      SUPERSET_EMBEDDING_DOMAIN: ${SUPERSET_EMBEDDING_DOMAIN:?SUPERSET_EMBEDDING_DOMAIN is not set}
+      SUPERSET_ENABLE_CORS: ${SUPERSET_ENABLE_CORS:-false}
+      SUPERSET_ENABLE_TEMPLATE_PROCESSING: ${SUPERSET_ENABLE_TEMPLATE_PROCESSING:-true}
+      SUPERSET_DASHBOARD_FILTERS_EXPOSE: ${SUPERSET_DASHBOARD_FILTERS_EXPOSE:-true}
+      SUPERSET_ENABLE_RBAC_ACCESS: ${SUPERSET_ENABLE_RBAC_ACCESS:-true}
+      SUPERSET_WEBSERVER_BASEURL: ${DOMAIN_SCEME:-http}://superset.${DOMAIN_NAME}
+
+x-superset-depends-on: &superset-depends-on
+  depends_on: 
+    - db
+    - redis
+x-superset-volumes: &superset-volumes
+    volumes: 
+    - ./docker:/app/docker
+    - superset:/app/superset_home
+
+services:
+  superset:
+    image: ${DOCKER_REGISTRY_URL:-ghcr.io}/${org}/superset:${SUPERSET_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
+    command: ["/app/docker/docker-bootstrap.sh", "app-gunicorn"]
+    user: "root"
+    restart: always
+    <<: [*superset-environment , *superset-volumes]
+    depends_on:
+      - db
+      - redis
+      - superset_init
+      - superset_worker
+      - superset_worker_beat
+
+  superset_init:
+    image: ${DOCKER_REGISTRY_URL:-ghcr.io}/${org}/superset:${SUPERSET_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
+    command: ["/app/docker/docker-init.sh"]
+    user: "root"
+    <<: [*superset-environment ,*superset-depends-on, *superset-volumes]
+
+
+  superset_worker:
+    image: ${DOCKER_REGISTRY_URL:-ghcr.io}/${org}/superset:${SUPERSET_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
+    command: ["/app/docker/docker-bootstrap.sh", "worker"]
+    restart: always
+    user: "root"
+    <<: [*superset-environment ,*superset-depends-on, *superset-volumes]
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "celery -A superset.tasks.celery_app:app inspect ping -d celery@$$HOSTNAME",
+        ]
+
+  superset_worker_beat:
+    image: ${DOCKER_REGISTRY_URL:-ghcr.io}/${org}/superset:${SUPERSET_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
+    command: ["/app/docker/docker-bootstrap.sh", "beat"]
+    restart: always
+    user: "root"
+    <<: [*superset-environment ,*superset-depends-on, *superset-volumes]
+
+volumes:
+  superset:
