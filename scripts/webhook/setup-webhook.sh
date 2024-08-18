@@ -30,6 +30,8 @@ fi
 source <(grep "^WEBHOOK_USER=" .env)
 source <(grep "^WEBHOOK_GROUP=" .env)
 
+sed "s|\$PROJECT_ROOT|${PROJECT_ROOT}|g" $PROJECT_ROOT/scripts/webhook/hooks.json.template > $PROJECT_ROOT/scripts/webhook/hooks.json
+
 sed -i "s|\${SCRIPT_DIR}|$SCRIPT_DIR|g" "$SERVICE_FILE"
 sed -i "s|\${PROJECT_ROOT}|$PROJECT_ROOT|g" "$SERVICE_FILE"
 sed -i "s|\${WEBHOOK_USER}|${WEBHOOK_USER:-ubuntu}|g" "$SERVICE_FILE"
