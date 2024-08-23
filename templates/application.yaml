@@ -1,0 +1,8 @@
+services:
+  SERVICE_NAME:
+    image: ${DOCKER_REGISTRY_URL}/${org}/IMAGE_NAME:${SERVICE_NAME_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
+    deploy:
+      replicas: ${SERVICE_NAME_REPLICAS:-1}
+    mem_limit: ${SERVICE_NAME_MEM_LIMIT:-${DEFAULT_MEM_LIMIT:-256m}}
+    cpus: ${SERVICE_NAME_CPU_LIMIT:-${DEFAULT_CPU_LIMIT:-0.5}}
+    # Removed environment, ports, depends_on, and volumes sections
