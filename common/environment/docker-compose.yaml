@@ -3,8 +3,6 @@ volumes:
 
 services:
   environment:
-    ports:
-      - "8200:8200"
     build:
       context: .
       dockerfile: Dockerfile
