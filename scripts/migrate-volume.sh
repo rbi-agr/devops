@@ -13,6 +13,8 @@ PROMPT_CLEANING_UNCESSARY_FILES="Cleaning up unnecessary files"
 PROMPT_ERROR_VOLUME_NOT_FOUND="Volume with name provided does not exist"
 SOURCE_HOST_ADDRESS="localhost"
 SOURCE_HOST_USER="$USER"
+PROMPT_ERROR_VOLUME_EXISTS="Error: A volume with the name provided already exists on the target host."
+
 
 # Environment check
 read -p "$PROMPT_DOCKER_VOLUME" current_volume_name
@@ -51,6 +53,12 @@ if [[ $SOURCE_HOST_ADDRESS != $TARGET_HOST_ADDRESS ]]; then
     echo "$PROMPT_ERROR_SSH_KEY_PATH"
     exit 1
   fi
+fi
+
+
+if ssh -i "$SSH_PRIVATE_KEY_FILE" "$TARGET_HOST_USER@$TARGET_HOST_ADDRESS" "docker volume ls --format '{{.Name}}' | grep -q '^${new_volume_name}$'"; then
+  echo "$PROMPT_ERROR_VOLUME_EXISTS"
+  exit 1
 fi
 echo "------------------------------------------------------------------------------"
 
