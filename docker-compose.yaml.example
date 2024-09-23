@@ -10,6 +10,7 @@
 #  - ./common/registry/docker-compose.yaml
 #  - ./common/superset/docker-compose.yaml
 #  - ./common/rabbitmq/docker-compose.yaml
+#  - ./common/kong/docker-compose.yaml
 
 
 services:
