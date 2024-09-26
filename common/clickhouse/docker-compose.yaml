@@ -1,6 +1,6 @@
 services:
   clickhouse:
-    image: 'clickhouse/clickhouse-server:24.1.6'
+    image: 'clickhouse/clickhouse-server:24.5.3.5'
     user: '101:101'
     hostname: clickhouse
     restart: always
@@ -12,7 +12,7 @@ services:
       - clickhouse_keeper
       
   clickhouse_keeper:
-    image: 'clickhouse/clickhouse-keeper:24.1.6'
+    image: 'clickhouse/clickhouse-keeper:24.5.3.5'
     user: '101:101'
     hostname: clickhouse-keeper
     restart: always
