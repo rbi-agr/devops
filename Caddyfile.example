@@ -8,3 +8,4 @@
 #import ./common/superset/Caddyfile
 #import ./common/rabbitmq/Caddyfile
 #import ./common/kong/Caddyfile
+#import ./common/pgweb/Caddyfile

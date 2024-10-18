@@ -1,0 +1,11 @@
+services:
+  pgweb:
+    image: sosedoff/pgweb:0.16.1
+    restart: always
+    healthcheck:
+      test: ["CMD", "nc", "-vz", "127.0.0.1", "8081"]
+      interval: 5s
+    mem_limit: ${PGWEB_MEM_LIMIT:-${DEFAULT_MEM_LIMIT:-512m}}
+    cpus: ${PGWEB_CPU_LIMIT:-${DEFAULT_CPU_LIMIT:-0.5}}
+    environment:
+      - PGWEB_DATABASE_URL=${PGWEB_DATABASE_URL}

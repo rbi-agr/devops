@@ -1,0 +1,3 @@
+{$DOMAIN_SCHEME}://pgweb.{$DOMAIN_NAME} {
+    reverse_proxy pgweb:8081
+}
