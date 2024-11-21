@@ -8,8 +8,8 @@
 #  - ./common/redis/docker-compose.yaml
 #  - ./common/db/docker-compose.yaml
 #  - ./common/registry/docker-compose.yaml
+#  - ./common/typesense/docker-compose.yaml
 #  - ./common/kong/docker-compose.yaml
-
 
 services:
   caddy:

@@ -1,0 +1,12 @@
+services:
+  typesense:
+    image: typesense/typesense:27.1
+    ports:
+      - 8108:8108
+    volumes:
+      - typesense:/data
+    # TYPESENSE_API_KEY can be any randomly generated value
+    command: --data-dir /data --api-key=${TYPESENSE_API_KEY}
+
+volumes:
+  typesense:
