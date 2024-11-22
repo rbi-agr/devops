@@ -5,8 +5,9 @@ services:
       - 8108:8108
     volumes:
       - typesense:/data
-    # TYPESENSE_API_KEY can be any randomly generated value
-    command: --data-dir /data --api-key=${TYPESENSE_API_KEY}
+    environment:
+      - TYPESENSE_DATA_DIR=/data
+      - TYPESENSE_API_KEY=${TYPESENSE_API_KEY}
 
 volumes:
   typesense:
