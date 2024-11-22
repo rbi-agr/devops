@@ -13,6 +13,7 @@
 #  - ./common/rabbitmq/docker-compose.yaml
 #  - ./common/kong/docker-compose.yaml
 #  - ./common/pgweb/docker-compose.yaml
+#  - ./common/dragonfly/docker-compose.yaml
 
 services:
   caddy:

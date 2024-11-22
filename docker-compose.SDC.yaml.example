@@ -10,6 +10,7 @@
 #  - ./common/registry/docker-compose.yaml
 #  - ./common/typesense/docker-compose.yaml
 #  - ./common/kong/docker-compose.yaml
+#  - ./common/dragonfly/docker-compose.yaml
 
 services:
   caddy:
