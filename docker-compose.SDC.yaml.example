@@ -11,6 +11,7 @@
 #  - ./common/typesense/docker-compose.yaml
 #  - ./common/kong/docker-compose.yaml
 #  - ./common/dragonfly/docker-compose.yaml
+#  - ./common/postgis/docker-compose.yaml
 
 services:
   caddy:
