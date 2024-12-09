@@ -2,8 +2,6 @@ services:
   demo_service:
       image: ghcr.io/${org}/demo-service:${DEMO_SERVICE_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
       command: bash demo-service-up.sh
-      deploy:
-        replicas: ${DEMO_SERVICE_REPLICAS:-1}
       restart: always
       environment:
         DEMO_ENV_WITH_DEFAULT: ${DEMO_ENV_WITH_DEFAULT:-default_value}

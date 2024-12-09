@@ -1,0 +1,10 @@
+services:
+  demo-service:
+      build: 
+        context: https://github.com/${org}/demo-service.git#${SERVER_GITHUB_BRANCH:-${DEFAULT_GITHUB_BRANCH?GITHUB_BRANCH is not set}}
+        args:
+          DEMO_ARG: ${DEMO_ARG}
+      restart: always
+      environment:
+        DEMO_ENV_WITH_DEFAULT: ${DEMO_ENV_WITH_DEFAULT:-default_value}
+        DEMO_ENV_WITH_ERROR: ${DEMO_ENV_WITH_ERROR:?DEMO_ENV_WITH_ERROR is not set}
