@@ -1,3 +1,0 @@
-{$DOMAIN_SCHEME}://superset.{$DOMAIN_NAME} {
-    reverse_proxy superset:8088
-}
