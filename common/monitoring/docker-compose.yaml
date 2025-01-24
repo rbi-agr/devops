@@ -29,7 +29,7 @@ services:
     command: -config.file=/etc/promtail/promtail-config.yaml
 
   grafana:
-    image: grafana/grafana:10.3.4
+    image: grafana/grafana:11.3.2
     restart: always
     depends_on:
       - promtail
@@ -48,7 +48,7 @@ services:
       - ./grafana/:/etc/grafana/provisioning/
 
   node_exporter:
-    image: prom/node-exporter:v1.6.1
+    image: prom/node-exporter:v1.8.2
     hostname: ${org}-${env}
     restart: always
     volumes:
@@ -63,7 +63,7 @@ services:
       - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
 
   prometheus:
-    image: prom/prometheus:v2.50.1
+    image: prom/prometheus:v3.1.0
     restart: always
     volumes:
       - ./prometheus/prometheus.yaml:/etc/prometheus/prometheus.yaml

@@ -1,0 +1,9 @@
+services:
+  hasura:
+    image: hasura/graphql-engine:latest
+    restart: always
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: ${DATABASE_URL:?DATABASE_URL is not set}
+      HASURA_GRAPHQL_ENABLE_CONSOLE: ${HASURA_GRAPHQL_ENABLE_CONSOLE:-false}
+      HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET:?HASURA_GRAPHQL_ADMIN_SECRET is not set}
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: ${HASURA_GRAPHQL_UNAUTHORIZED_ROLE:-public}

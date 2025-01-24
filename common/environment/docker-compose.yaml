@@ -15,8 +15,8 @@ services:
       - ./vault.json:/vault/config/vault.json
       - ./admin-policy.hcl:/vault/policies/admin-policy.hcl
       - ./vault-init.sh:/vault-init.sh
-      - ../../.env:/bhasai/.env
-      - ./:/bhasai/
+      - ../../.env:/epic/.env
+      - ./:/epic/
     cap_add:
       - IPC_LOCK
     command: sh -c "bash vault-init.sh" 
