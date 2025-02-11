@@ -1,0 +1,3 @@
+{$DOMAIN_SCHEME}://agr-ai-adaptor.{$DOMAIN_NAME} {
+    reverse_proxy agr_ai_adaptor:8080
+}
