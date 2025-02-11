@@ -1,1 +1,3 @@
 import ./agr_controller/Caddyfile
+import ./agr_ai_adaptor/Caddyfile
+import ./agr_ai_tolls/Caddyfile

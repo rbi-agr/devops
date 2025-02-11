@@ -1,0 +1,22 @@
+services:
+  agr_ai_tools:
+    image: ghcr.io/${org}/agr-ai-tools:${AGR_AI_TOOLS_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
+    restart: always
+    platform: linux/amd64
+    depends_on:
+      - db
+    environment:
+      AI_TOOLS_AUTH_HEADER: ${AI_TOOLS_AUTH_HEADER}
+      AI_TOOLS_BASE_URL: ${AI_TOOLS_BASE_URL}
+      AUTH_HEADER_KEY: ${AUTH_HEADER_KEY}
+      DATABASE_URL: ${PG_DATABASE_URL}
+      FLAGSMITH_ENVIRONMENT_KEY: ${FLAGSMITH_ENVIRONMENT_KEY}
+      MINO_ACCESS_KEY: ${MINO_ACCESS_KEY}
+      MINO_BASE_URL: ${MINO_BASE_URL}
+      MINO_SECRET_KEY: ${MINO_SECRET_KEY}
+      TEXT_LANG_DETECTION_MODEL: ${TEXT_LANG_DETECTION_MODEL}
+      ULCA_API_KEY: ${ULCA_API_KEY}
+      ULCA_CONFIG_URL: ${ULCA_CONFIG_URL}
+      ULCA_USER_ID: ${ULCA_USER_ID}
+      SPEECH_KEY: ${SPEECH_KEY}
+      SPEECH_REGION: ${SPEECH_REGION}

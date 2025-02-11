@@ -1,2 +1,4 @@
 include:
   - ./agr_controller/docker-compose.yaml
+  - ./agr_ai_adapter/docker-compose.yaml
+  - ./agr_ai_tools/docker-compose.yaml
