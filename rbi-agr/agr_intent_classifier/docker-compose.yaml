@@ -1,0 +1,7 @@
+services:
+  agr_intent_classifier:
+    image: ghcr.io/${org}/agr-intent-classsifier:${AGR_INTENT_CLASSIFIER_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
+    platform: linux/amd64
+    restart: always
+
+    #image name is not as service name, need to change after workflow works in  agr_intent_classifier

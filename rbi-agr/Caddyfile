@@ -1,3 +1,4 @@
+import ./agr_ai_adapter/Caddyfile
 import ./agr_controller/Caddyfile
-import ./agr_ai_adaptor/Caddyfile
-import ./agr_ai_tolls/Caddyfile
+import ./agr_ai_tools/Caddyfile
+import ./agr_intent_classifier/Caddyfile
