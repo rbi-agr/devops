@@ -1,6 +1,6 @@
 import ./rbi-agr/Caddyfile
 import ./common/minio/Caddyfile
-# import ./common/monitoring/Caddyfile
+import ./common/monitoring/Caddyfile
 import ./common/hasura/Caddyfile
 # import ./common/environment/Caddyfile
 # The registry doesn't have a auth thus exposing it publicly means anyone can access the images pushed to this registry
