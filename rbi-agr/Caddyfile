@@ -3,3 +3,4 @@ import ./agr_controller/Caddyfile
 import ./agr_ai_tools/Caddyfile
 import ./agr_intent_classifier/Caddyfile
 import ./mistral/Caddyfile
+import ./frontend/Caddyfile
