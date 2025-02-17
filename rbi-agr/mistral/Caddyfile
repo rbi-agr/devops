@@ -1,0 +1,3 @@
+{$DOMAIN_SCHEME}://mistral.{$DOMAIN_NAME} {
+    reverse_proxy mistral:11434
+}

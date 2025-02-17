@@ -1,6 +1,6 @@
 services:
   agr_ai_adapter:
-    image: ghcr.io/${org}/ai-adapter:${AGR_AI_ADAPTER_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
+    image: ghcr.io/${org}/agr-ai-adapter:${AGR_AI_ADAPTER_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
     restart: always
     platform: linux/amd64
     depends_on:

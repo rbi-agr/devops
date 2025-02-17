@@ -1,0 +1,11 @@
+services:
+  mistral:
+    image: ollama/ollama:latest
+    restart: always
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        ollama serve &  # Start the Ollama server in the background
+        sleep 5  # Wait for the server to start
+        ollama pull mistral  # Pull the Mistral model
+        tail -f /dev/null  # Keep the container running
