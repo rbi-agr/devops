@@ -2,5 +2,5 @@ import ./agr_ai_adapter/Caddyfile
 import ./agr_controller/Caddyfile
 import ./agr_ai_tools/Caddyfile
 import ./agr_intent_classifier/Caddyfile
+import ./json_db/Caddyfile
 import ./mistral/Caddyfile
-import ./frontend/Caddyfile

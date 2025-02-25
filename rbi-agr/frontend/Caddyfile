@@ -1,3 +1,0 @@
-{$DOMAIN_SCHEME}://ui.{$DOMAIN_NAME} {
-    reverse_proxy frontend:3000
-}

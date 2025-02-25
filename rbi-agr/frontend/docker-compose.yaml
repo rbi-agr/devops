@@ -1,8 +1,0 @@
-services:
-  frontend:
-    restart: always
-    build:
-      context: https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/rbi-agr/RBI-ChatUi.git#${FORNTEND_GITHUB_BRANCH:-${DEFAULT_GITHUB_BRANCH:?DEFAULT_GITHUB_BRANCH is not set}}
-      args:
-        NEXT_PUBLIC_TEXT_TO_SPEECH: ${NEXT_PUBLIC_TEXT_TO_SPEECH:?NEXT_PUBLIC_TEXT_TO_SPEECH is not set}
-        NEXT_PUBLIC_BACKEND_URL: ${BACKEND_URL:?BACKEND_URL is not set}

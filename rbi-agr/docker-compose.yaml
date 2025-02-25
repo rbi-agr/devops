@@ -4,4 +4,5 @@ include:
   - ./agr_ai_tools/docker-compose.yaml
   - ./agr_intent_classifier/docker-compose.yaml
   - ./mistral/docker-compose.yaml
-  - ./frontend/docker-compose.yaml
+  - ./json_db/docker-compose.yaml
+  # - ./frontend/docker-compose.yaml

@@ -1,0 +1,5 @@
+services:
+  json_db:
+    image: ghcr.io/${org}/json-db:${JSON_DB_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
+    restart: always
+
