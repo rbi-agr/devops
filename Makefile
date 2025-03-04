@@ -2,7 +2,7 @@ FORCE_RECREATE_FLAG := $(if $(filter 1,$(ENABLE_FORCE_RECREATE)),--force-recreat
 REMOVE_ORPHANS_FLAG := $(if $(or $(services),$(filter 1, $(DISABLE_REMOVE_ORPHANS))),,--remove-orphans)
 REMOVE_ANSI_FLAG := $(if $(filter 1,$(DISABLE_ANSI)),,--ansi never)
 
-DOCKER_COMPOSE_COMMAND=docker compose $(REMOVE_ANSI_FLAG) -p epic
+DOCKER_COMPOSE_COMMAND=docker compose $(REMOVE_ANSI_FLAG) -p rbih
 
 # Function to validate services parameter
 define validate_services
